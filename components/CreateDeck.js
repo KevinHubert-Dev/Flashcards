@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
+
 import { TextInput, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
+import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
 
 import * as CardActions from '../redux/actions/deckAction'
-
-import { connect } from 'react-redux'
-import * as API from '../utils/API'
 import * as Colors from '../utils/colors'
-
-import { NavigationActions } from 'react-navigation'
+import * as API from '../utils/API'
 
 class CreateDeck extends Component {
 
@@ -15,16 +14,26 @@ class CreateDeck extends Component {
     title: ''
   }
 
+  /**
+   * Close 'CreateDeck' screen and navigate to previous
+   */
   toHome = () => {
     this.props.navigation.dispatch(NavigationActions.back({
       key: 'CreateDeck'
     }))
   }
 
+  /**
+   * Update title-prop in state
+   */
   handleTitleChange = (value) => {
     this.setState(() => ({ title: value }))
   }
 
+  /**
+   * Create new deck and save in AsyncStorage and dispatch action to add to redux-store.
+   * Then navigate to previous screen.
+   */
   handleCreateDeck = () => {
     const { decks, dispatch, navigation } = this.props
 
@@ -41,6 +50,9 @@ class CreateDeck extends Component {
     this.toHome()
   }
 
+  /**
+   * Render CreateDeck-component
+   */
   render() {
     const { value } = this.state
     return (

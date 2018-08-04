@@ -113,10 +113,6 @@ const style = StyleSheet.create({
     width: 50,
     padding: 10
   },
-  processContainer: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-  },
   container: {
     maxWidth: Dimensions.get('screen').width,
     flex: 1,

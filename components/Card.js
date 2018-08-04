@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import { TextInput, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
+import {  View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-import * as CardActions from '../redux/actions/deckAction'
-
-import { connect } from 'react-redux'
-import * as API from '../utils/API'
 import * as Colors from '../utils/colors'
-import { MaterialIcons } from '@expo/vector-icons'
-
 import PropTypes from 'prop-types';
 
 class Card extends Component {
@@ -16,35 +10,44 @@ class Card extends Component {
     showAnswer: false
   }
 
+  /**
+   * Call the parent-function which handles given answers.
+   * Hide the answer of the current question because otherwise 
+   * the answer of the next-question will be displayed by default
+   */
   handleAnswer = (isCorrect) => {
-    /* Hide answer before handle answer, otherwise the 
-    answer for the next question may be visible */
     if (this.state.showAnswer) {
-      /* Because setState is async, i use the callBack-functionality */
+      /* Use setState-callback to avoid race-conditions (e.g: next question loaded before setState) */
       this.setState(
         { showAnswer: false },
         this.props.onHandleAnswer(isCorrect)
       )
-    } else { 
+    } else {
       /* If answer was not visible, go ahead */
       this.props.onHandleAnswer(isCorrect)
     }
   }
 
-  /* Toggle between show question or answer */
+  /**
+   * Toggle between show question or answer
+   */
   toggleShowAnswer = () => {
     this.setState(currState => ({ showAnswer: !currState.showAnswer }))
   }
 
-
+  /**
+   * Render Card-component
+   */
   render() {
+    const { answer, question } = this.props
+    const { showAnswer } = this.state
     return (
       <View style={style.container}>
         <View style={[style.container]}>
-          <Text style={style.title}>{this.state.showAnswer ? "Answer" : "Question"}</Text>
-          <Text style={style.text}>{this.state.showAnswer ? this.props.answer : this.props.question}</Text>
+          <Text style={style.title}>{showAnswer ? "Answer" : "Question"}</Text>
+          <Text style={style.text}>{showAnswer ? answer : question}</Text>
           <TouchableOpacity style={style.button} onPress={this.toggleShowAnswer} >
-            <Text style={style.buttonSmallText}>Show {this.state.showAnswer ? 'Question' : 'Answer'}</Text>
+            <Text style={style.buttonSmallText}>Show {showAnswer ? 'Question' : 'Answer'}</Text>
           </TouchableOpacity>
         </View>
         <View style={[style.container]}>
@@ -76,12 +79,6 @@ const style = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     color: Colors.black
-  },
-  buttonSmall: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 200,
-    height: 75,
   },
   buttonSmallText: {
     fontSize: 16,

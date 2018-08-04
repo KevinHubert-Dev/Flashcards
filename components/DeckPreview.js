@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
-
-import * as CardActions from '../redux/actions/deckAction'
-
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import * as API from '../utils/API'
 
 class DeckPreview extends Component {
 
+  /**
+   * Deck-screen which shows the data and options to work with a specific deck
+   */
   openDeck = () => {
     const { navigation, id } = this.props
     navigation.navigate('Deck', { id })
   }
 
+  /**
+   * Render DeckPreview-component.
+   */
   render() {
     const { title, questions } = this.props.data
     return (

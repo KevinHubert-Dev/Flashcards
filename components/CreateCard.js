@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
+
 import { TextInput, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
+import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
 
 import * as CardActions from '../redux/actions/deckAction'
-
-import { connect } from 'react-redux'
 import * as API from '../utils/API'
 import * as Colors from '../utils/colors'
-
-import { NavigationActions } from 'react-navigation'
 
 class CreateCard extends Component {
 
@@ -16,18 +15,32 @@ class CreateCard extends Component {
     answer: ''
   }
 
+  /**
+   * Navigate to previous screen.
+   */
   screenBack = () => {
     this.props.navigation.dispatch(NavigationActions.back())
   }
 
+  /**
+   * Update state.question
+   */
   handleQuestionChange = (value) => {
     this.setState(() => ({ question: value }))
   }
 
+  /**
+   * Update state.answer
+   */
   handleAnswerChange = (value) => {
     this.setState(() => ({ answer: value }))
   }
 
+  /**
+   * Add new Card to currently opened deck.
+   * Dispatch action to update redux-store and call API to store card in AsyncStorage.
+   * Then navigate back to previous screen
+   */
   handleCreateCard = () => {
     const { decks, dispatch, navigation } = this.props
     const { question, answer } = this.state
@@ -40,13 +53,13 @@ class CreateCard extends Component {
     }
 
     dispatch(CardActions.addQuestionToDeck(
-      this.props.navigation.state.params.id,
-      this.state
+      navigation.state.params.id,
+      { question, answer }
     ))
     API.addCardToDeck(
-      this.props.navigation.state.params.id,
-      this.state.question,
-      this.state.answer
+      navigation.state.params.id,
+      question,
+      answer
     )
     this.setState({
       answer: '',
@@ -55,12 +68,25 @@ class CreateCard extends Component {
     this.screenBack()
   }
 
+  /**
+   * Render CreateCard-component
+   */
   render() {
     const { value } = this.state
     return (
       <KeyboardAvoidingView style={style.container} behavior="padding" enabled>
-        <TextInput placeholder='What is the question?' style={style.input} value={value} onChangeText={(val) => { this.handleQuestionChange(val) }} />
-        <TextInput placeholder='What is the answer?' style={style.input} value={value} onChangeText={(val) => { this.handleAnswerChange(val) }} />
+        <TextInput
+          placeholder='What is the question?'
+          style={style.input}
+          value={value}
+          onChangeText={(val) => { this.handleQuestionChange(val) }}
+        />
+        <TextInput
+          placeholder='What is the answer?'
+          style={style.input}
+          value={value}
+          onChangeText={(val) => { this.handleAnswerChange(val) }}
+        />
         <TouchableOpacity style={style.button} onPress={this.handleCreateCard} >
           <Text style={style.buttonText}>SUBMIT</Text>
         </TouchableOpacity>
@@ -74,11 +100,6 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    color: Colors.purple
   },
   input: {
     margin: 15,

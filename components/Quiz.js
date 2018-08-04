@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import { TextInput, View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity } from 'react-native'
 
-import * as CardActions from '../redux/actions/deckAction'
-
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+
 import * as API from '../utils/API'
 import * as Colors from '../utils/colors'
-import Card from './Card'
 import * as Helpers from '../utils/helpers'
-import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons'
 
-import { NavigationActions } from 'react-navigation'
+import Card from './Card'
 
 class CreateCard extends Component {
 
@@ -20,6 +19,10 @@ class CreateCard extends Component {
     currentQuestionIndex: 0
   }
 
+  /**
+  * Updates the state of the component. To count in-/correct answers and current question
+  * @param {boolean} isCorrect - Was the given answer correct?
+  */
   handleAnswerGiven = (isCorrect) => {
     this.setState((currState) => ({
       correct: isCorrect ? currState.correct + 1 : currState.correct,
@@ -28,9 +31,10 @@ class CreateCard extends Component {
     }))
   }
 
-
+  /**
+  * Resets the state-properties which restarts the quiz
+  */
   handleRestartQuiz = () => {
-    /* Resetting the state to start the quiz again. */
     this.setState({
       correct: 0,
       incorrect: 0,
@@ -38,16 +42,26 @@ class CreateCard extends Component {
     })
   }
 
+  /**
+   * Navigate to previous screen
+   */
   handleBackToDeck = () => {
     this.props.navigation.dispatch(NavigationActions.back())
   }
 
+  /**
+   * Render Quiz-component
+   */
   render() {
 
-    const currCard = this.props.deck.questions[this.state.currentQuestionIndex]
-    const percentCorrect = Math.round(this.state.correct / (this.state.correct + this.state.incorrect) * 100)
+    const { correct, incorrect, currentQuestionIndex } = this.state
+    const { deck } = this.props
 
-    if (this.state.currentQuestionIndex + 1 > this.props.deck.questions.length) {
+    const currCard = deck.questions[currentQuestionIndex]
+    const percentCorrect = Math.round(correct / (correct + incorrect) * 100)
+
+    /* When all questions has been answered render statistic */
+    if (currentQuestionIndex + 1 > deck.questions.length) {
 
       /* clear Notification for today and plan a new 
          series of notification starting tomorrow */
@@ -64,8 +78,8 @@ class CreateCard extends Component {
               ? <MaterialCommunityIcons name='check-circle-outline' color={Colors.green} size={75} />
               : <MaterialCommunityIcons name='close-circle-outline' color={Colors.red} size={75} />
           }
-          <Text style={style.statisticText}>Correct: {this.state.correct} ({percentCorrect}%)</Text>
-          <Text style={style.statisticText}>Incorrect: {this.state.incorrect} ({100 - percentCorrect}%)</Text>
+          <Text style={style.statisticText}>Correct: {correct} ({percentCorrect}%)</Text>
+          <Text style={style.statisticText}>Incorrect: {incorrect} ({100 - percentCorrect}%)</Text>
           <Text style={style.infoText}>Reach +50% correct to pass</Text>
 
           <View style={style.resultContainer}>
@@ -84,11 +98,11 @@ class CreateCard extends Component {
       )
     }
 
-    const { value } = this.state
+    /* Render current questions when there are still unanswered cards */
     return (
       <View style={style.container}>
         <Text style={style.quizProgressText}>
-          Card {this.state.currentQuestionIndex + 1} / {this.props.deck.questions.length}
+          Card {currentQuestionIndex + 1} / {deck.questions.length}
         </Text>
         <Card
           answer={currCard.answer}
@@ -111,10 +125,6 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  processContainer: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
   },
   container: {
     flex: 1,

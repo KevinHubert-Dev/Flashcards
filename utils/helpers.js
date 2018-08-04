@@ -18,29 +18,37 @@ const NOTIFICATION_OBJ = {
   }
 }
 
+/**
+ * Clears all sheduled notifications
+ */
 export function clearLocalNotficiation() {
-  console.log("UNSCHEDULING!")
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(() => { Notifications.cancelAllScheduledNotificationsAsync() })
 }
 
+/**
+ * Schedules a local notifcation for the next day repeats every day
+ */
 export function scheduleLocalNotification() {
-console.log("SCHEDULING!")
   AsyncStorage.getItem(NOTIFICATION_KEY)
   .then(data => {
     /* If not already scheduled */
     if (data === null) {
+      /* Check for permission */
       Permissions.askAsync(Permissions.NOTIFICATIONS)
       .then(result => {
         if (result.status === 'granted') {
+
+          /* Remove all scheduled notifications */
           Notifications.cancelAllScheduledNotificationsAsync()
 
-          /* Schedule for the next day on 6pm (german: 18:00Uhr) */
+          /* Set schedule-timing for the next day at 6pm (german: 18:00Uhr) */
           let tomorrow = new Date()
           tomorrow.setDate(tomorrow.getDate() + 1)
           tomorrow.setHours(18)
           tomorrow.setMinutes(0)
 
+          /* Schedule the notification and repeat the notification daily */
           Notifications.scheduleLocalNotificationAsync(
             NOTIFICATION_OBJ,
             {
@@ -48,6 +56,7 @@ console.log("SCHEDULING!")
               repeat: 'day'
             }
           )
+          /* Store that the notification was scheduled */
           AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
         }
       })
