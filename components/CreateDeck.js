@@ -42,22 +42,23 @@ class CreateDeck extends Component {
     if (title.length < 1) {
       return alert("Please enter a title for your deck.")
     }
-
+    
+    this.setState({ title: '' })
+    
     dispatch(CardActions.addDeck(title))
     API.addDeck(title)
     this.toDeck(title)
-    this.setState({ title: '' })
   }
 
   /**
    * Render CreateDeck-component
    */
   render() {
-    const { value } = this.state
+    const { title } = this.state
     return (
       <KeyboardAvoidingView style={style.container} behavior="padding" enabled>
         <Text style={style.title}>What is the title of your new Deck?</Text>
-        <TextInput style={style.input} value={value} onChangeText={(val) => { this.handleTitleChange(val) }} />
+        <TextInput style={style.input} value={title} onChangeText={(val) => { this.handleTitleChange(val) }} />
         <TouchableOpacity style={style.button} onPress={this.handleCreateDeck} >
           <Text style={style.buttonText}>SUBMIT</Text>
         </TouchableOpacity>
