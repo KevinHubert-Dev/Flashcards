@@ -62,6 +62,7 @@ class Deck extends Component {
           text: 'Yes', onPress: () => {
             API.removeDeck(deckID)
             this.props.dispatch(CardActions.removeDeck(deckID))
+            this.screenBack()
           }
         },
       ]
@@ -104,9 +105,8 @@ class Deck extends Component {
   render() {
     const { deck } = this.props
 
-    /* If deck does not exists (was deleted) go back to previous screen */
+    /* If deck does not exists (was deleted) render nothing till navigate to previous screen is done */
     if (!deck) {
-      this.screenBack()
       return null
     }
 
