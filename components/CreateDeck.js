@@ -17,10 +17,8 @@ class CreateDeck extends Component {
   /**
    * Close 'CreateDeck' screen and navigate to previous
    */
-  toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({
-      key: 'CreateDeck'
-    }))
+  toDeck = (id) => {
+    this.props.navigation.navigate('Deck', { id })
   }
 
   /**
@@ -36,18 +34,19 @@ class CreateDeck extends Component {
    */
   handleCreateDeck = () => {
     const { decks, dispatch, navigation } = this.props
+    const { title } = this.state
 
-    if (decks[this.state.title]) {
+    if (decks[title]) {
       return alert("The entered title is already in use.")
     }
-    if (this.state.title.length < 1) {
+    if (title.length < 1) {
       return alert("Please enter a title for your deck.")
     }
 
-    dispatch(CardActions.addDeck(this.state.title))
-    API.addDeck(this.state.title)
+    dispatch(CardActions.addDeck(title))
+    API.addDeck(title)
+    this.toDeck(title)
     this.setState({ title: '' })
-    this.toHome()
   }
 
   /**
