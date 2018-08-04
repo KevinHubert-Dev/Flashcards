@@ -16,9 +16,11 @@ function cardReducer(state = null, action) {
 
     /* Remove deck from the object of existing decks */
     case DeckAction.REMOVE_DECK: {
-      const remindingDecks = (
-        Object.keys(state).filter(key => key !== action.deckName)
-      ).map(key => state[key])
+      const remindingDecks = {}
+      Object.keys(state).filter(key => key !== action.deckName)
+        .map(key => { remindingDecks[key] = state[key] })
+
+      console.log(remindingDecks)
       return {
         ...remindingDecks
       }
