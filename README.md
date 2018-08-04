@@ -1,7 +1,7 @@
 # Flashcards - (ReactNative)
 
 Application based on ReactNative to manage Flashcards (e.g. for Learning purpose). 
-The project was createed with 'create-react-native-app'.
+The project was created with 'create-react-native-app'.
 
 The application works on both Android and iOS.
 
@@ -25,11 +25,11 @@ npm start
 ```
 Scan the QR-Code within the Expo-App.
 
-If you want to use a emulator please check out the [instruction by expo](https://docs.expo.io/versions/latest/workflow/android-studio-emulator):
+If you want to use a emulator please check out the [instruction by expo](https://docs.expo.io/versions/latest/workflow/android-studio-emulator)
 
 
 ### Build for Android / iOS
-Please checkout the [offical instruction by expo](https://docs.expo.io/versions/v29.0.0/distribution/building-standalone-apps)
+Please take a look at the [offical instruction by expo](https://docs.expo.io/versions/v29.0.0/distribution/building-standalone-apps)
 
 ### Tests
 The app has been manually tested on Android and partially on iOS within the Expo-app.
