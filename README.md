@@ -31,7 +31,8 @@ If you want to use a emulator please check out the [instruction by expo](https:/
 ### Build for Android / iOS
 Please checkout the [offical instruction by expo](https://docs.expo.io/versions/v29.0.0/distribution/building-standalone-apps)
 
-
+### Tests
+The app has been manually tested on Android and partially on iOS within the Expo-app.
 
 ## Screenshots
 
