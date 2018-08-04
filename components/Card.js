@@ -105,7 +105,7 @@ const style = StyleSheet.create({
 })
 
 Card.propTypes = {
-  handleAnswerGiven: PropTypes.func.isRequired,
+  onHandleAnswer: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired
 }
