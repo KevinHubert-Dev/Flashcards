@@ -10,9 +10,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 import PropTypes from 'prop-types';
 
-{/* <MaterialIcons name='check_circle_outline' size={35} color={Colors.green} />
-<MaterialIcons name='error_outline' size={35} color={Colors.green} /> */}
-
 class Card extends Component {
 
   state = {
@@ -20,12 +17,25 @@ class Card extends Component {
   }
 
   handleAnswer = (isCorrect) => {
-    this.props.onHandleAnswer(isCorrect)
+    /* Hide answer before handle answer, otherwise the 
+    answer for the next question may be visible */
+    if (this.state.showAnswer) {
+      /* Because setState is async, i use the callBack-functionality */
+      this.setState(
+        { showAnswer: false },
+        this.props.onHandleAnswer(isCorrect)
+      )
+    } else { 
+      /* If answer was not visible, go ahead */
+      this.props.onHandleAnswer(isCorrect)
+    }
   }
 
+  /* Toggle between show question or answer */
   toggleShowAnswer = () => {
     this.setState(currState => ({ showAnswer: !currState.showAnswer }))
   }
+
 
   render() {
     return (
@@ -102,6 +112,5 @@ Card.propTypes = {
   question: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired
 }
-
 
 export default Card
