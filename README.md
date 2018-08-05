@@ -5,7 +5,6 @@ The project was created with 'create-react-native-app'.
 
 The application works on both Android and iOS.
 
-
 ## Installation
 
 ### Clone & Install
@@ -27,7 +26,6 @@ Scan the QR-Code within the Expo-App.
 
 If you want to use a emulator please check out the [instruction by expo](https://docs.expo.io/versions/latest/workflow/android-studio-emulator)
 
-
 ### Build for Android / iOS
 Please take a look at the [offical instruction by expo](https://docs.expo.io/versions/v29.0.0/distribution/building-standalone-apps)
 
@@ -38,9 +36,15 @@ The app has been manually tested on Android and partially on iOS within the Expo
 
 ![Dashboard](/screenshots/1.jpg?raw=true)
 
-
 ## Features
-
+- Create deck of cards
+- Select a specific deck
+- Add cards to a deck
+- Remove cards from a deck
+- Remove decks
+- Start the Quiz on a deck
+- Get statistic about done-quiz (>= 50% to pass)
+- Receive (daily) local-notification when no quiz was done
 
 # About
 

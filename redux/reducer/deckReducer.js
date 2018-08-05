@@ -20,7 +20,6 @@ function cardReducer(state = null, action) {
       Object.keys(state).filter(key => key !== action.deckName)
         .map(key => { remindingDecks[key] = state[key] })
 
-      console.log(remindingDecks)
       return {
         ...remindingDecks
       }
