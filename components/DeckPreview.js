@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import * as Colors from '../utils/colors'
 
 class DeckPreview extends Component {
 
@@ -40,9 +41,11 @@ const style = StyleSheet.create({
   },
   title: {
     fontSize: 36,
+    color: Colors.purple
   },
   description: {
-    fontSize: 16
+    fontSize: 16,
+    color: Colors.grey
   }
 
 })

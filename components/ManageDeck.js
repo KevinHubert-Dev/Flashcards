@@ -34,7 +34,7 @@ class ManageDeck extends Component {
                 </View>
                 <TouchableOpacity onPress={() => this.handleDeleteCard(id, question)}>
                   <View style={style.cardDelete}>
-                    <MaterialIcons name='delete' size={30} />
+                    <MaterialIcons name='close' size={30} />
                   </View>
                 </TouchableOpacity>
               </View>

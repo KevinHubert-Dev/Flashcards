@@ -156,9 +156,9 @@ const style = StyleSheet.create({
     margin: 10
   },
   editDeckBTN: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
     borderColor: Colors.black,
-    borderWidth: 3
+    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: Colors.transparent
   },
   startQuizBTN: {
     backgroundColor: Colors.purple

@@ -20,6 +20,17 @@ class CreateCard extends Component {
   }
 
   /**
+     * Sets the title for the navigation-header bar based on passed params
+     * Moreover adds a delete-button in the top-right-corner
+     */
+  static navigationOptions = ({ navigation }) => {
+    const { id } = navigation.state.params
+    return {
+      title: `Deck - ${id}`,
+    }
+  }
+
+  /**
   * Updates the state of the component. To count in-/correct answers and current question
   * @param {boolean} isCorrect - Was the given answer correct?
   */
@@ -70,14 +81,14 @@ class CreateCard extends Component {
 
       return (
         <View style={style.resultContainer}>
-          <Text style={style.title}>
-            {percentCorrect >= 50 ? 'Congratulation' : 'Try again'}
-          </Text>
           {
             percentCorrect >= 50
               ? <MaterialCommunityIcons name='check-circle-outline' color={Colors.green} size={75} />
               : <MaterialCommunityIcons name='close-circle-outline' color={Colors.red} size={75} />
           }
+          <Text style={style.title}>
+            {percentCorrect >= 50 ? 'Congratulation' : 'Try again'}
+          </Text>
           <Text style={style.statisticText}>Correct: {correct} ({percentCorrect}%)</Text>
           <Text style={style.statisticText}>Incorrect: {incorrect} ({100 - percentCorrect}%)</Text>
           <Text style={style.infoText}>Reach +50% correct to pass</Text>
@@ -122,16 +133,19 @@ const style = StyleSheet.create({
     marginTop: 5
   },
   resultContainer: {
+    padding: 15,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   container: {
+    padding: 15,
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   title: {
+    marginTop: 10,
     fontSize: 24,
     textAlign: 'center',
     color: Colors.purple
@@ -143,9 +157,9 @@ const style = StyleSheet.create({
     width: 200,
     height: 60,
     borderRadius: 5,
-    borderWidth: 2,
     borderColor: Colors.black,
-    backgroundColor: Colors.white,
+    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: Colors.transparent
   },
   buttonText: {
     fontSize: 24,

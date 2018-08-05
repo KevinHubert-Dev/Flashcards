@@ -84,8 +84,9 @@ const style = StyleSheet.create({
     padding: 15,
     width: "80%",
     borderRadius: 5,
-    borderWidth: 2,
-    borderColor: '#555'
+    borderColor: Colors.black,
+    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: Colors.transparent
   },
   button: {
     alignItems: 'center',
