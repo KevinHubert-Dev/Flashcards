@@ -34,7 +34,9 @@ The app has been manually tested on Android and partially on iOS within the Expo
 
 ## Screenshots
 
-![Dashboard](/screenshots/1.jpg?raw=true)
+![Screenshots: Decks, Create Deck, Manage Deck](/screenshots/1.jpg?raw=true)
+
+![Screenshots: Quiz, Manage Cards, Quiz Result](/screenshots/1.jpg?raw=true)
 
 ## Features
 - Create deck of cards
